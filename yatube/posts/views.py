@@ -32,7 +32,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.select_related('author')
+    posts = group.posts.all().select_related('author')
 
     page_obj = paginate(request, posts)
 
