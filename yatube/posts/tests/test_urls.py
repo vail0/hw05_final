@@ -37,7 +37,7 @@ class PostsURLTests(TestCase):
             reverse('posts:group_list',
                     kwargs={'slug': self.group.slug}): 'posts/group_list.html',
             reverse('posts:profile',
-                    kwargs={'username': self.user_author}
+                    kwargs={'username': self.user}
                     ): 'posts/profile.html',
             reverse('posts:post_detail',
                     kwargs={'post_id': self.post.id}
