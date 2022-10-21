@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Подписки
+{% endblock %}
+
+{% block header %}
+    Подписки
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    {% include "includes/switcher.html" %}
+
+    {% for post in page_obj %}
+      {% include "includes/post_card.html" %}
+    {% endfor %}
+
+    {% include "includes/paginator.html" %}
+
+  </div>
+{% endblock %}
