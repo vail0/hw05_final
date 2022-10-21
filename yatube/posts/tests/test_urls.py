@@ -1,6 +1,7 @@
 # posts/tests/test_urls.py
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
+from django.urls import reverse
 from posts.models import Group, Post
 
 User = get_user_model()
@@ -33,12 +34,12 @@ class PostsURLTests(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         # Шаблоны по адресам
         templates_url_names = {
-            '/': 'posts/index.html',
-            '/create/': 'posts/create_post.html',
-            '/group/test-slug/': 'posts/group_list.html',
-            '/profile/test-author/': 'posts/profile.html',
-            f'/posts/{self.post.pk}/': 'posts/post_detail.html',
-            f'/posts/{self.post.pk}/edit/': 'posts/create_post.html',
+            '/': reverse('posts/index.html'),
+            '/create/':  reverse('posts/create_post.html'),
+            '/group/test-slug/':  reverse('posts/group_list.html'),
+            '/profile/test-author/':  reverse('posts/profile.html'),
+            f'/posts/{self.post.pk}/':  reverse('posts/post_detail.html'),
+            f'/posts/{self.post.pk}/edit/':  reverse('posts/create_post.html'),
         }
         for address, template in templates_url_names.items():
             with self.subTest(address=address):
