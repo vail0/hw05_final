@@ -35,11 +35,11 @@ class PostsURLTests(TestCase):
         # Шаблоны по адресам
         templates_url_names = {
             '/': reverse('posts/index.html'),
-            '/create/':  reverse('posts/create_post.html'),
-            '/group/test-slug/':  reverse('posts/group_list.html'),
-            '/profile/test-author/':  reverse('posts/profile.html'),
-            f'/posts/{self.post.pk}/':  reverse('posts/post_detail.html'),
-            f'/posts/{self.post.pk}/edit/':  reverse('posts/create_post.html'),
+            '/create/': reverse('posts/create_post.html'),
+            '/group/test-slug/': reverse('posts/group_list.html'),
+            '/profile/test-author/': reverse('posts/profile.html'),
+            f'/posts/{self.post.pk}/': reverse('posts/post_detail.html'),
+            f'/posts/{self.post.pk}/edit/': reverse('posts/create_post.html'),
         }
         for address, template in templates_url_names.items():
             with self.subTest(address=address):
