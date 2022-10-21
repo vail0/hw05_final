@@ -1,5 +1,4 @@
 # posts/tests/test_urls.py
-from functools import cache
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from posts.models import Group, Post
@@ -43,7 +42,6 @@ class PostsURLTests(TestCase):
         }
         for address, template in templates_url_names.items():
             with self.subTest(address=address):
-                cache.clear()
                 response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
 
