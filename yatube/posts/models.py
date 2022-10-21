@@ -42,7 +42,7 @@ class Post(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='groups',
+        related_name='posts',
         help_text='Выбери группу, если хочешь',
     )
     # Поле для картинки (необязательное)
