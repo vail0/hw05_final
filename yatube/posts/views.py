@@ -32,7 +32,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.groups.select_related('author')
+    posts = group.posts.select_related('author')
 
     page_obj = paginate(request, posts)
 
@@ -50,8 +50,10 @@ def profile(request, username):
     posts_auth = author.posts.select_related('group')
 
     following = None
-    if request.user.is_authenticated:
-        following = request.user.follower.filter(author=author).exists()
+    following = (request.user.is_authenticated
+                 and Follow.objects.filter(author=author).exists())
+    # if request.user.is_authenticated:
+    #     following = request.user.follower.filter(author=author).exists()
 
     page_obj = paginate(request, posts_auth)
 
@@ -159,8 +161,7 @@ def profile_follow(request, username):
 @login_required
 def profile_unfollow(request, username):
     # Дизлайк, отписка
-    follower = get_object_or_404(Follow, user=request.user,
-                                 author__username=username)
-    follower.delete()
+    Follow.objects.filter(user=request.user,
+                          author__username=username).delete()
 
     return redirect('posts:profile', username)
