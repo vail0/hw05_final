@@ -1,7 +1,7 @@
 # posts/tests/test_urls.py
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.test import Client, TestCase
-from django.urls import reverse
 from posts.models import Group, Post
 
 User = get_user_model()
@@ -32,24 +32,19 @@ class PostsURLTests(TestCase):
 
     def test_urls_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
+        # Шаблоны по адресам
+        cache.clear()
         templates_url_names = {
-            reverse('posts:index'): 'posts/index.html',
-            reverse('posts:group_list',
-                    kwargs={'slug': self.group.slug}): 'posts/group_list.html',
-            reverse('posts:profile',
-                    kwargs={'username': self.user}
-                    ): 'posts/profile.html',
-            reverse('posts:post_detail',
-                    kwargs={'post_id': self.post.id}
-                    ): 'posts/post_detail.html',
-            reverse('posts:edit',
-                    kwargs={'post_id': self.post.id}
-                    ): 'posts/create_post.html',
-            reverse('posts:create'): 'posts/create_post.html',
+            '/': 'posts/index.html',
+            '/create/': 'posts/create_post.html',
+            '/group/test-slug/': 'posts/group_list.html',
+            '/profile/test-author/': 'posts/profile.html',
+            f'/posts/{self.post.pk}/': 'posts/post_detail.html',
+            f'/posts/{self.post.pk}/edit/': 'posts/create_post.html',
         }
-        for adress, template in templates_url_names.items():
-            with self.subTest(adress=adress):
-                response = self.post_author.get(adress)
+        for address, template in templates_url_names.items():
+            with self.subTest(address=address):
+                response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
 
     # Проверяем общедоступные страницы
