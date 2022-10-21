@@ -52,8 +52,6 @@ def profile(request, username):
     following = None
     following = (request.user.is_authenticated
                  and Follow.objects.filter(author=author).exists())
-    # if request.user.is_authenticated:
-    #     following = request.user.follower.filter(author=author).exists()
 
     page_obj = paginate(request, posts_auth)
 
